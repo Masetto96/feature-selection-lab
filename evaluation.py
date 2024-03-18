@@ -1,21 +1,25 @@
+#%%
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Load the data
 df = pd.read_json("evaluation_results.json")
 
-# Count occurrences of individual features
-feature_counts = {}
-for row in df['selected_features']:
-    for feature in row:
-        feature_counts[feature] = feature_counts.get(feature, 0) + 1
+# Flatten the list of selected features
+flattened_features = [item for sublist in df['selected_features'] for item in sublist]
 
-# Get Most successful model
-best_model = df.iloc[df['score_sequential'].idxmax()]
+# Count occurrences of each feature
+feature_counts = pd.Series(flattened_features).value_counts()
 
-# Plot feature occurrences
-plt.bar(feature_counts.keys(), feature_counts.values())
-plt.xlabel('Feature')
-plt.ylabel('Occurrences')
-plt.title('Occurrences of Features')
+# Plotting
+plt.figure(figsize=(10, 6))  # Adjust figure size if needed
+sns.barplot(x=feature_counts.index, y=feature_counts.values)
+plt.xlabel('Selected Features')
+plt.ylabel('Count')
+plt.title('Count of Each Selected Feature')
+plt.xticks(rotation=45, ha='right')  # Rotate x-axis labels for better readability
+plt.tight_layout()  # Adjust layout to prevent clipping of labels
 plt.show()
+
+# %% 

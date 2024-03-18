@@ -46,7 +46,7 @@ class FeatureSelector:
         """
         # selector = SelectKBest(k=X.shape[1]//2).fit(X, y)
         # keeping 50% of features
-        selector = SelectPercentile(percentile=25).fit(X, y)
+        selector = SelectPercentile(percentile=50).fit(X, y)
         return selector.transform(X), selector
 
 
