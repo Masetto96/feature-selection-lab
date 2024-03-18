@@ -46,7 +46,7 @@ class FeatureSelector:
         """
         # selector = SelectKBest(k=X.shape[1]//2).fit(X, y)
         # keeping 50% of features
-        selector = SelectPercentile(percentile=50).fit(X, y)
+        selector = SelectPercentile(percentile=25).fit(X, y)
         return selector.transform(X), selector
 
 
@@ -82,7 +82,9 @@ class ModelFactory(object):
 
         # Index of selected features
         mask = selector.get_support()
-        x_reduced_indices = np.where(mask)[0]
+        x_reduced_indices = np.where(mask)[0].astype(int)
+
+        index_name_map = dict(zip(np.arange(len(x_reduced_indices)), x_reduced_indices))
         X_test_reduced = X_test[:, x_reduced_indices]
 
         for name, model in self.classifiers.items():
@@ -108,11 +110,12 @@ class ModelFactory(object):
                 result = {
                     "model_name": name,
                     "direction": direction,
-                    "selected_features": x_selected_indices.tolist(),
+                    "selected_features": [int(index_name_map[i]) for i in x_selected_indices],
                     "score_sequential": m_seq.score(X_test_selected, y_test),
                     "report": self._evaluate(m_seq, X_test_selected, y_test),
                 }
 
                 results.append(result)
+                break
 
         return results

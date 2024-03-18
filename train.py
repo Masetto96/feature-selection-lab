@@ -7,6 +7,7 @@ K = 5
 TRAIN_DATA_PATH = "archive/TrainSet.csv"
 TEST_DATA_PATH = "archive/TestSet.csv"
 
+
 if __name__ == "__main__":
 
     data_loader = DataLoader(training_data_path=TRAIN_DATA_PATH, test_data_path=TEST_DATA_PATH)
