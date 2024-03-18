@@ -4,10 +4,112 @@
         "direction": "forward",
         "selected_features": [
             0,
-            2,
             5,
-            60,
-            62
+            38,
+            39,
+            60
+        ],
+        "score_sequential": 0.45,
+        "report": {
+            "0": {
+                "precision": 0.6,
+                "recall": 0.6,
+                "f1-score": 0.6,
+                "support": 5.0
+            },
+            "1": {
+                "precision": 0.25,
+                "recall": 0.2,
+                "f1-score": 0.2222222222222222,
+                "support": 5.0
+            },
+            "2": {
+                "precision": 0.5,
+                "recall": 0.6,
+                "f1-score": 0.5454545454545454,
+                "support": 5.0
+            },
+            "3": {
+                "precision": 0.4,
+                "recall": 0.4,
+                "f1-score": 0.4,
+                "support": 5.0
+            },
+            "accuracy": 0.45,
+            "macro avg": {
+                "precision": 0.4375,
+                "recall": 0.44999999999999996,
+                "f1-score": 0.44191919191919193,
+                "support": 20.0
+            },
+            "weighted avg": {
+                "precision": 0.4375,
+                "recall": 0.45,
+                "f1-score": 0.4419191919191919,
+                "support": 20.0
+            }
+        }
+    },
+    {
+        "model_name": "Random Forest",
+        "direction": "backward",
+        "selected_features": [
+            2,
+            35,
+            36,
+            57,
+            58
+        ],
+        "score_sequential": 0.5,
+        "report": {
+            "0": {
+                "precision": 0.5,
+                "recall": 1.0,
+                "f1-score": 0.6666666666666666,
+                "support": 5.0
+            },
+            "1": {
+                "precision": 0.6666666666666666,
+                "recall": 0.4,
+                "f1-score": 0.5,
+                "support": 5.0
+            },
+            "2": {
+                "precision": 0.5,
+                "recall": 0.2,
+                "f1-score": 0.2857142857142857,
+                "support": 5.0
+            },
+            "3": {
+                "precision": 0.4,
+                "recall": 0.4,
+                "f1-score": 0.4,
+                "support": 5.0
+            },
+            "accuracy": 0.5,
+            "macro avg": {
+                "precision": 0.5166666666666666,
+                "recall": 0.5,
+                "f1-score": 0.463095238095238,
+                "support": 20.0
+            },
+            "weighted avg": {
+                "precision": 0.5166666666666666,
+                "recall": 0.5,
+                "f1-score": 0.46309523809523806,
+                "support": 20.0
+            }
+        }
+    },
+    {
+        "model_name": "Gradient Boosting",
+        "direction": "forward",
+        "selected_features": [
+            0,
+            2,
+            35,
+            58,
+            60
         ],
         "score_sequential": 0.4,
         "report": {
@@ -18,60 +120,60 @@
                 "support": 5.0
             },
             "1": {
-                "precision": 0.25,
-                "recall": 0.2,
-                "f1-score": 0.2222222222222222,
+                "precision": 0.4,
+                "recall": 0.4,
+                "f1-score": 0.4,
                 "support": 5.0
             },
             "2": {
-                "precision": 0.3333333333333333,
+                "precision": 0.6666666666666666,
                 "recall": 0.4,
-                "f1-score": 0.36363636363636365,
+                "f1-score": 0.5,
                 "support": 5.0
             },
             "3": {
-                "precision": 0.5,
-                "recall": 0.6,
-                "f1-score": 0.5454545454545454,
+                "precision": 0.25,
+                "recall": 0.4,
+                "f1-score": 0.3076923076923077,
                 "support": 5.0
             },
             "accuracy": 0.4,
             "macro avg": {
-                "precision": 0.3958333333333333,
+                "precision": 0.45416666666666666,
                 "recall": 0.4,
-                "f1-score": 0.3939393939393939,
+                "f1-score": 0.41303418803418807,
                 "support": 20.0
             },
             "weighted avg": {
-                "precision": 0.3958333333333333,
+                "precision": 0.4541666666666666,
                 "recall": 0.4,
-                "f1-score": 0.3939393939393939,
+                "f1-score": 0.41303418803418807,
                 "support": 20.0
             }
         }
     },
     {
         "model_name": "Gradient Boosting",
-        "direction": "forward",
+        "direction": "backward",
         "selected_features": [
-            0,
+            7,
             35,
+            39,
             58,
-            60,
             62
         ],
         "score_sequential": 0.55,
         "report": {
             "0": {
-                "precision": 0.6,
+                "precision": 0.75,
                 "recall": 0.6,
-                "f1-score": 0.6,
+                "f1-score": 0.6666666666666666,
                 "support": 5.0
             },
             "1": {
-                "precision": 0.5,
+                "precision": 0.42857142857142855,
                 "recall": 0.6,
-                "f1-score": 0.5454545454545454,
+                "f1-score": 0.5,
                 "support": 5.0
             },
             "2": {
@@ -88,15 +190,15 @@
             },
             "accuracy": 0.55,
             "macro avg": {
-                "precision": 0.55,
+                "precision": 0.5696428571428571,
                 "recall": 0.5499999999999999,
-                "f1-score": 0.5474747474747474,
+                "f1-score": 0.5527777777777778,
                 "support": 20.0
             },
             "weighted avg": {
-                "precision": 0.55,
+                "precision": 0.5696428571428571,
                 "recall": 0.55,
-                "f1-score": 0.5474747474747474,
+                "f1-score": 0.5527777777777777,
                 "support": 20.0
             }
         }
@@ -148,6 +250,57 @@
                 "precision": 0.6,
                 "recall": 0.6,
                 "f1-score": 0.5974747474747475,
+                "support": 20.0
+            }
+        }
+    },
+    {
+        "model_name": "K-Nearest Neighbors",
+        "direction": "backward",
+        "selected_features": [
+            0,
+            7,
+            36,
+            60,
+            61
+        ],
+        "score_sequential": 0.55,
+        "report": {
+            "0": {
+                "precision": 0.7142857142857143,
+                "recall": 1.0,
+                "f1-score": 0.8333333333333334,
+                "support": 5.0
+            },
+            "1": {
+                "precision": 0.6,
+                "recall": 0.6,
+                "f1-score": 0.6,
+                "support": 5.0
+            },
+            "2": {
+                "precision": 0.3333333333333333,
+                "recall": 0.2,
+                "f1-score": 0.25,
+                "support": 5.0
+            },
+            "3": {
+                "precision": 0.4,
+                "recall": 0.4,
+                "f1-score": 0.4,
+                "support": 5.0
+            },
+            "accuracy": 0.55,
+            "macro avg": {
+                "precision": 0.5119047619047619,
+                "recall": 0.55,
+                "f1-score": 0.5208333333333334,
+                "support": 20.0
+            },
+            "weighted avg": {
+                "precision": 0.5119047619047619,
+                "recall": 0.55,
+                "f1-score": 0.5208333333333334,
                 "support": 20.0
             }
         }

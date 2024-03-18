@@ -20,3 +20,4 @@ if __name__ == "__main__":
     # Save results to JSON file
     with open('evaluation_results.json', 'w') as file_hanlde:
         json.dump(results, file_hanlde, indent=4)
+

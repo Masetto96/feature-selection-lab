@@ -116,6 +116,5 @@ class ModelFactory(object):
                 }
 
                 results.append(result)
-                break
 
         return results
