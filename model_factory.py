@@ -4,7 +4,7 @@ Experiment with different feature sets obtained through filter and wrapper metho
 Train each classifier using different combinations of feature sets.
 Evaluate the performance of each classifier using appropriate evaluation metrics (e.g., accuracy, precision, recall, F1-score) on the validation set.
 """
-
+import numpy as np
 # https://medium.com/@evertongomede/recursive-feature-elimination-a-powerful-technique-for-feature-selection-in-machine-learning-89b3c2f3c26a
 
 from sklearn.neighbors import KNeighborsClassifier
@@ -46,7 +46,7 @@ class FeatureSelector:
         """
         # selector = SelectKBest(k=X.shape[1]//2).fit(X, y)
         # keeping 50% of features
-        selector = SelectPercentile(percentile=25).fit(X, y)
+        selector = SelectPercentile(percentile=50).fit(X, y)
         return selector.transform(X), selector
 
 
@@ -59,7 +59,7 @@ class ModelFactory(object):
         self.classifiers = {
             "Random Forest": RandomForestClassifier(),
             "Gradient Boosting": GradientBoostingClassifier(),
-            # "K-Nearest Neighbors": KNeighborsClassifier(),
+            "K-Nearest Neighbors": KNeighborsClassifier(),
         }
 
     def _evaluate(self, model, X_test, y_test):
@@ -67,7 +67,7 @@ class ModelFactory(object):
         Evaluate the performance of the model on the test set and return a classification report.
         """
         y_pred = model.predict(X_test)
-        report = classification_report(y_test, y_pred)
+        report = classification_report(y_test, y_pred, output_dict=True)
         return report
 
     def build_and_evaluate(self, X_train, y_train, X_test, y_test, k=5):
@@ -77,25 +77,42 @@ class ModelFactory(object):
         """
         results = []
         print("X_train.shape: ", X_train.shape)
-        X_train_halved, selector = self.feature_selector.select_statistically(X_train, y_train)
-        print("X_train_halved.shape: ", X_train_halved.shape)
+        X_train_reduced, selector = self.feature_selector.select_statistically(X_train, y_train)
+        print("X_train_reduced.shape: ", X_train_reduced.shape)
+
+        # Index of selected features
+        mask = selector.get_support()
+        x_reduced_indices = np.where(mask)[0]
+        X_test_reduced = X_test[:, x_reduced_indices]
+
         for name, model in self.classifiers.items():
+            for direction in ['forward', 'backward']:
 
-            print("Selecting features ...")
-            X_selected_sequentially, sfs = self.feature_selector.select_sequentially(
-                model, X_train_halved, y_train, k, direction="backward"
-            )
-            # X_selected_recursive, rfe = self.feature_selector.select_recursively(model, X_train, y_train, k)
-            print(f"Training {name} ...")
-            m_seq = model.fit(X_selected_sequentially, y_train)
+                print("Selecting features ...")
+                X_selected_sequentially, sfs = self.feature_selector.select_sequentially(
+                    model, X_train_reduced, y_train, k, direction=direction
+                )
+                print("Number of features: ", X_selected_sequentially.shape)
+                print(f"Training {name} ...")
 
-            print("Evaluating ...")
-            result = {
-                "model_name": name,
-                "score_sequential": m_seq.score(X_test, y_test),
-                "report": self._evaluate(m_seq, X_selected_sequentially, y_test),
-            }
+                mask = sfs.get_support()
+                x_selected_indices = np.where(mask)[0]
 
-            results.append(result)
+                # Get Mask of selected features
+                X_test_selected = X_test_reduced[:, x_selected_indices]
+
+                # Train the model
+                m_seq = model.fit(X_selected_sequentially, y_train)
+
+                print("Evaluating ...")
+                result = {
+                    "model_name": name,
+                    "direction": direction,
+                    "selected_features": x_selected_indices.tolist(),
+                    "score_sequential": m_seq.score(X_test_selected, y_test),
+                    "report": self._evaluate(m_seq, X_test_selected, y_test),
+                }
+
+                results.append(result)
 
         return results
