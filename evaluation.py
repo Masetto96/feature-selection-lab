@@ -5,6 +5,7 @@ import seaborn as sns
 
 FEATURES_FILE = "archive/TrainSet.csv"
 EVALUATION_FILE_PREFIX = "evaluation_results"
+PLOT_PATH = "plots"
 PLOT_SIZE = (16, 6)
 TOP_FEATURES = 5
 
@@ -22,9 +23,8 @@ def get_evaluation_files():
 
 
 def plot_feature_counts(feature_counts, title, ax):
-    """Plot the normalized feature counts on the given axes."""
-    feature_counts_normalised = feature_counts / feature_counts.sum()
-    sns.barplot(x=feature_counts.index, y=feature_counts_normalised.values, ax=ax)
+    """Plot the feature counts on the given axes."""
+    sns.barplot(x=feature_counts.index, y=feature_counts.values, ax=ax)
     ax.set_xlabel('Selected Features')
     ax.set_ylabel('Count')
     ax.set_title(title)
@@ -51,6 +51,8 @@ def plot_total_feature_counts(feature_counts):
     plt.xlabel('Selected Features')
     plt.ylabel('Count')
     plt.title('Total Count of Each Selected Feature')
+    plt.tight_layout()
+    plt.savefig(os.path.join(PLOT_PATH, "feature_counts_total.png"))
     plt.show()
 
 
@@ -71,6 +73,7 @@ def main():
         plot_feature_counts(feature_counts, f'Count of Selected Features for {file_name}', axes[i])
 
     plt.tight_layout()
+    plt.savefig(os.path.join(PLOT_PATH, "feature_counts_per_subset.png"))
     plt.show()
 
     feature_counts_total = pd.concat(feature_counts_total)
