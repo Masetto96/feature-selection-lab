@@ -10,6 +10,22 @@ PLOT_SIZE = (16, 6)
 TOP_FEATURES = 5
 
 
+def get_feature_category(index=0):
+    """Return the category of the given feature index."""
+    feature_categories = {
+        "Dynamics": [1, 8],
+        "Rhythm": [8, 16],
+        "Pitch": [16, 22],
+        "Harmony": [22, 31],
+        "Timbre": [31, 59],
+        "Structure": [59, 66]
+    }
+    # Find the category of the given index
+    for category, (start, end) in feature_categories.items():
+        if start <= index+1 < end:
+            return category
+
+
 def get_target_names():
     """Return the target names."""
     # Read the CSV file
@@ -89,6 +105,24 @@ def main():
 
     feature_counts_total = pd.concat(feature_counts_total)
     plot_total_feature_counts(feature_counts_total)
+
+    # ---- Plot Category Counts of Selected Features ----
+    # Get Best Features
+    feature_best = feature_counts_total[:TOP_FEATURES]
+    # Plot Category Counts of Selected Features
+    feature_best = feature_best.reset_index()
+    feature_best['category'] = feature_best['index'].apply(lambda x: get_feature_category(int(x.split()[1])))
+    feature_best = feature_best.groupby('category')['index'].count().reset_index()
+    feature_best.columns = ['category', 'count']
+    plt.figure(figsize=PLOT_SIZE)
+    sns.barplot(x=feature_best['category'], y=feature_best['count'])
+    plt.title('Category Counts of Selected Features')
+    plt.xlabel('Category')
+    plt.ylabel('Count')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.savefig(os.path.join(PLOT_PATH, "category_counts.png"))
+    plt.show()
 
 
 if __name__ == "__main__":

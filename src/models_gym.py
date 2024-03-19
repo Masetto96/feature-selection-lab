@@ -39,7 +39,7 @@ class Classifier:
         plt.title(f"Confusion Matrix - Test Set: Score {score:.2f}")
         plt.xticks(ticks=[0, 1, 2, 3], labels=target_names)
         plt.yticks(ticks=[0, 1, 2, 3], labels=target_names)
-        # plt.savefig(f"{PLOTS_PATH}/confusion_matrix.png")
+        plt.savefig(f"{PLOTS_PATH}/confusion_matrix.png")
         plt.show()
 
 
