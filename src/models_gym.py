@@ -49,12 +49,11 @@ class RFClf(Classifier):
         self.clf = RandomForestClassifier()
         self.param_grid = {
             "bootstrap": [True, False],
-            "max_depth": [3, 5, 10, None],
-            "n_estimators": [50, 75],
+            "max_depth": [3, 5,None],
+            "n_estimators": [25, 50, 75],
             "max_features": ["sqrt", "log2", None],
             "criterion": ["gini", "entropy"],
-            "min_samples_leaf": [1, 2, 3],
-            "min_samples_split": [2, 3],
+            "min_samples_leaf": [1, 2],
         }
 
 
@@ -63,9 +62,7 @@ class KNNClf(Classifier):
         super().__init__()
         self.clf = KNeighborsClassifier()
         self.param_grid = {
-            "n_neighbors": [3, 5, 7, 9, 11],
-            "weights": ['uniform', 'distance'],
-            "algorithm": ['auto', 'ball_tree', 'kd_tree', 'brute'],
-            "leaf_size": [10, 20, 30, 40, 50],
+            "n_neighbors": [3, 5, 7],
+            "leaf_size": [2, 3, 4, 5, 10],
             "p": [1, 2]  # 1 for Manhattan distance, 2 for Euclidean distance
         }
