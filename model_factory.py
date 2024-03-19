@@ -40,13 +40,13 @@ class FeatureSelector:
         rfe = RFECV(model, min_features_to_select=k).fit(X, y)
         return rfe.transform(X), rfe
 
-    def select_statistically(self, X, y):
+    def select_statistically(self, X, y, percentile=25):
         """
         https://scikit-learn.org/stable/modules/feature_selection.html#univariate-feature-selection
         """
         # selector = SelectKBest(k=X.shape[1]//2).fit(X, y)
         # keeping 50% of features
-        selector = SelectPercentile(percentile=50).fit(X, y)
+        selector = SelectPercentile(percentile=percentile).fit(X, y)
         return selector.transform(X), selector
 
 
@@ -77,7 +77,7 @@ class ModelFactory(object):
         """
         results = []
         print("X_train.shape: ", X_train.shape)
-        X_train_reduced, selector = self.feature_selector.select_statistically(X_train, y_train)
+        X_train_reduced, selector = self.feature_selector.select_statistically(X_train, y_train, percentile=25)
         print("X_train_reduced.shape: ", X_train_reduced.shape)
 
         # Index of selected features
