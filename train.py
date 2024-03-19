@@ -23,6 +23,6 @@ if __name__ == "__main__":
     results = model_factory.build_and_evaluate(X_train, y_train, X_test, y_test, k=K)
 
     # Save results to JSON file
-    with open('evaluation_results_minmaxscaling.json', 'w') as file_hanlde:
+    with open('evaluation_results_standardscaling_75percentFeatureSearch.json', 'w') as file_hanlde:
         json.dump(results, file_hanlde, indent=4)
 

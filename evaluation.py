@@ -1,26 +1,81 @@
-#%%
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-for scaling in ['minmax', 'standard']:
+FEATURES_FILE = "archive/TrainSet.csv"
+EVALUATION_FILE_PREFIX = "evaluation_results"
+PLOT_SIZE = (16, 6)
+TOP_FEATURES = 5
 
-    # Load the data
-    df = pd.read_json(f"evaluation_results_{scaling}scaling.json")
 
-    # Flatten the list of selected features
-    flattened_features = [item for sublist in df['selected_features'] for item in sublist]
+def get_label_names(indexes):
+    """Return the names of the selected features."""
+    with open(FEATURES_FILE, "r") as file:
+        label_names = file.readline().strip().split(",")[1:]
+    return [label_names[i] for i in indexes]
 
-    # Count occurrences of each feature
-    feature_counts = pd.Series(flattened_features).value_counts()
 
-    # Plotting
-    plt.figure(figsize=(10, 6))  # Adjust figure size if needed
+def get_evaluation_files():
+    """Return all evaluation results files."""
+    return [file for file in os.listdir() if file.startswith(EVALUATION_FILE_PREFIX)]
+
+
+def plot_feature_counts(feature_counts, title, ax):
+    """Plot the normalized feature counts on the given axes."""
+    feature_counts_normalised = feature_counts / feature_counts.sum()
+    sns.barplot(x=feature_counts.index, y=feature_counts_normalised.values, ax=ax)
+    ax.set_xlabel('Selected Features')
+    ax.set_ylabel('Count')
+    ax.set_title(title)
+
+
+def plot_total_feature_counts(feature_counts):
+    """Plot the total count of each feature."""
+    feature_counts = feature_counts.groupby(feature_counts.index).sum()
+    feature_counts = feature_counts.sort_values(ascending=False)
+
+    plt.figure(figsize=PLOT_SIZE)
     sns.barplot(x=feature_counts.index, y=feature_counts.values)
+    plt.xticks(fontsize=8)
+    plt.yticks(fontsize=8)
+
+    for i, bar in enumerate(plt.gca().patches):
+        color = 'teal' if i < TOP_FEATURES else 'grey'
+        bar.set_color(color)
+        if i < TOP_FEATURES:
+            plt.text(bar.get_x() + bar.get_width() / 2, bar.get_height(),
+                     round(bar.get_height(), 2), ha='center', va='bottom',
+                     fontsize=8, fontweight='bold')
+
     plt.xlabel('Selected Features')
     plt.ylabel('Count')
-    plt.title('Count of Each Selected Feature')
-    plt.xticks(rotation=45, ha='right')  # Rotate x-axis labels for better readability
-    plt.tight_layout()  # Adjust layout to prevent clipping of labels
+    plt.title('Total Count of Each Selected Feature')
     plt.show()
 
+
+def main():
+    """ Main function to plot the feature counts."""
+    file_names = get_evaluation_files()
+    fig, axes = plt.subplots(len(file_names), figsize=(PLOT_SIZE[0], PLOT_SIZE[1] * len(file_names)))
+    plt.title('Count of Each Selected Feature')
+
+    feature_counts_total = []
+    for i, file_name in enumerate(file_names):
+        df = pd.read_json(file_name)
+        flattened_features = [item for sublist in df['selected_features'] for item in sublist]
+        feature_names = get_label_names(flattened_features)
+        feature_names = [f"{name} \n{index}" for name, index in zip(feature_names, flattened_features)]
+        feature_counts = pd.Series(feature_names).value_counts()
+        feature_counts_total.append(feature_counts)
+        plot_feature_counts(feature_counts, f'Count of Selected Features for {file_name}', axes[i])
+
+    plt.tight_layout()
+    plt.show()
+
+    feature_counts_total = pd.concat(feature_counts_total)
+    plot_total_feature_counts(feature_counts_total)
+
+
+if __name__ == "__main__":
+    main()

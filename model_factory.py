@@ -77,7 +77,7 @@ class ModelFactory(object):
         """
         results = []
         print("X_train.shape: ", X_train.shape)
-        X_train_reduced, selector = self.feature_selector.select_statistically(X_train, y_train, percentile=25)
+        X_train_reduced, selector = self.feature_selector.select_statistically(X_train, y_train, percentile=75)
         print("X_train_reduced.shape: ", X_train_reduced.shape)
 
         # Index of selected features
