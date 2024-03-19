@@ -18,15 +18,15 @@ if __name__ == "__main__":
     X_test, y_test = data_loader.prepare_test_data()
 
     # Select train and test features
-    X_sel, selector = fs.select_statistically(X_train, y_train)
+    X_train_reduced, selector = fs.select_statistically(X_train, y_train, percentile=30)
     mask = selector.get_support()
     x_reduced_indices = np.where(mask)[0].astype(int)
     X_test_reduced = X_test[:, x_reduced_indices]
 
     cl = Classifier()
-    best_cl = cl.train_and_optimize(X_train, y_train)
+    best_cl = cl.train_and_optimize(X_train_reduced, y_train)
 
-    cl_report = classification_report(y_test, best_cl.predict(X_test_reduced) output_dict=True)
+    cl_report = classification_report(y_test, best_cl.predict(X_test_reduced), output_dict=True)
 
     print("Score: ", best_cl.score(X_test_reduced, y_test))
     print(classification_report)
