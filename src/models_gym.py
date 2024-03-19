@@ -1,46 +1,56 @@
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import RandomizedSearchCV
 from sklearn.metrics import classification_report, ConfusionMatrixDisplay
 import matplotlib.pyplot as plt
-
+from sklearn.model_selection import RandomizedSearchCV
 
 class Classifier:
     def __init__(self):
-        # initiate algorithm
-        self.clf = RandomForestClassifier()
-        # define the hyperparameter search space
-        self.param_grid = {
-            "bootstrap": [True, False],
-            "max_depth": [3, 5, 10, None],
-            "n_estimators": [50, 75, 100],
-            "max_features": ["sqrt", "log2", None],
-            "criterion": ["gini", "entropy"],
-            "max_features": [1, 3, 5, 7],
-            "min_samples_leaf": [1, 2, 3],
-            "min_samples_split": [1, 2, 3],
-        }
+        self.clf = None
+        self.param_grid = None
 
-    def train_and_optimize(self, X, y, cv=15, scoring="f1_macro", verbose=1):
-        """
-        Trains and optimizes a classifier using GridSearchCV.
-
-        Parameters:
-            X (array-like): The feature matrix.
-            y (array-like): The target labels.
-            cv (int, optional): Number of folds in cross-validation. Default is 15.
-            scoring (str, optional): The scoring method to use. Default is "f1_macro".
-        """
-        # https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html
-        hyper_search_model = GridSearchCV(
-            param_grid=self.param_grid, estimator=self.clf, cv=cv, verbose=verbose, scoring=scoring
+    def train_and_optimize(self, X, y, cv=15, scoring="accuracy", verbose=1, n_iter=20):
+        if self.clf is None or self.param_grid is None:
+            raise ValueError("Classifier or parameter grid is not set.")
+        
+        print(f"***** {self.clf.__class__.__name__} *****")
+        hyper_search_model = RandomizedSearchCV(
+            param_distributions=self.param_grid, estimator=self.clf, cv=cv, n_iter=n_iter, verbose=verbose, scoring=scoring, random_state=42
         ).fit(X, y)
 
         print("Best hyperparameters are: " + str(hyper_search_model.best_params_))
-        print("Best score is: " + str(hyper_search_model.best_score_))
+        print("Best hyperparam score is: " + str(hyper_search_model.best_score_))
         self.clf = hyper_search_model.best_estimator_
 
     def evaluate_best_model(self, X_test, y_test):
-        print("Score: ", self.clf.score(X_test, y_test))
-        print("Report: ", classification_report(y_test, self.clf.predict(X_test), output_dict=True))
+        print("Score on test set: ", self.clf.score(X_test, y_test))
+        print("Report on test set: ", classification_report(y_test, self.clf.predict(X_test), output_dict=True))
         ConfusionMatrixDisplay.from_estimator(self.clf, X_test, y_test)
         plt.show()
+
+class RFClf(Classifier):
+    def __init__(self):
+        super().__init__()
+        self.clf = RandomForestClassifier()
+        self.param_grid = {
+            "bootstrap": [True, False],
+            "max_depth": [3, 5, 10, None],
+            "n_estimators": [50, 75],
+            "max_features": ["sqrt", "log2", None],
+            "criterion": ["gini", "entropy"],
+            "min_samples_leaf": [1, 2, 3],
+            "min_samples_split": [2, 3],
+        }
+
+class KNNClf(Classifier):
+    def __init__(self):
+        super().__init__()
+        self.clf = KNeighborsClassifier()
+        self.param_grid = {
+            "n_neighbors": [3, 5, 7, 9, 11],
+            "weights": ['uniform', 'distance'],
+            "algorithm": ['auto', 'ball_tree', 'kd_tree', 'brute'],
+            "leaf_size": [10, 20, 30, 40, 50],
+            "p": [1, 2]  # 1 for Manhattan distance, 2 for Euclidean distance
+        }
