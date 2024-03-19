@@ -9,6 +9,13 @@ PLOT_PATH = "../plots"
 PLOT_SIZE = (16, 6)
 TOP_FEATURES = 5
 
+colors = ['#4E9ACF',  # Blue
+          '#6BBB5F',  # Green
+          '#48A497',  # Teal
+          '#A0A0A0',  # Grey
+          '#F79256',  # Orange
+          '#E63946']  # Red
+
 
 def get_feature_category(index=0):
     """Return the category of the given feature index."""
@@ -83,6 +90,31 @@ def plot_total_feature_counts(feature_counts):
     plt.show()
 
 
+def plot_category_counts(feature_counts_total, subset_limits=[5]) -> None:
+    """ Plot Category Counts of Selected Features """
+
+    fig, axes = plt.subplots(1, len(subset_limits), figsize=(6 * len(subset_limits), 6))
+
+    for i, limit in enumerate(subset_limits):
+        # Get Best Features
+        feature_best = feature_counts_total[:limit]
+        # Plot Category Counts of Selected Features
+        feature_best = feature_best.reset_index()
+        feature_best['category'] = feature_best['index'].apply(lambda x: get_feature_category(int(x.split()[1])))
+        feature_best = feature_best.groupby('category')['index'].count().reset_index()
+        feature_best.columns = ['category', 'count']
+
+        sns.barplot(x=feature_best['category'], y=feature_best['count'], ax=axes[i], palette=colors)
+        axes[i].set_title(f'Category Counts of {limit:02d} Selected Features')
+        axes[i].set_xlabel('Category')
+        axes[i].set_ylabel('Count')
+        axes[i].set_xticklabels(axes[i].get_xticklabels(), rotation=45)
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(PLOT_PATH, f"feature_categories.png"))
+    plt.show()
+
+
 def main():
     """ Main function to plot the feature counts."""
     file_names = get_evaluation_files()
@@ -107,22 +139,7 @@ def main():
     plot_total_feature_counts(feature_counts_total)
 
     # ---- Plot Category Counts of Selected Features ----
-    # Get Best Features
-    feature_best = feature_counts_total[:TOP_FEATURES]
-    # Plot Category Counts of Selected Features
-    feature_best = feature_best.reset_index()
-    feature_best['category'] = feature_best['index'].apply(lambda x: get_feature_category(int(x.split()[1])))
-    feature_best = feature_best.groupby('category')['index'].count().reset_index()
-    feature_best.columns = ['category', 'count']
-    plt.figure(figsize=PLOT_SIZE)
-    sns.barplot(x=feature_best['category'], y=feature_best['count'])
-    plt.title('Category Counts of Selected Features')
-    plt.xlabel('Category')
-    plt.ylabel('Count')
-    plt.xticks(rotation=45)
-    plt.tight_layout()
-    plt.savefig(os.path.join(PLOT_PATH, "category_counts.png"))
-    plt.show()
+    plot_category_counts(feature_counts_total, subset_limits=[5, 10, 20])
 
 
 if __name__ == "__main__":
