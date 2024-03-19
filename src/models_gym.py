@@ -4,6 +4,12 @@ from sklearn.model_selection import RandomizedSearchCV
 from sklearn.metrics import classification_report, ConfusionMatrixDisplay
 import matplotlib.pyplot as plt
 from sklearn.model_selection import RandomizedSearchCV
+import json
+from evaluation import get_target_names
+
+EVALUATIONS_PATH = "../results"
+PLOTS_PATH = "../plots"
+
 
 class Classifier:
     def __init__(self):
@@ -24,10 +30,18 @@ class Classifier:
         self.clf = hyper_search_model.best_estimator_
 
     def evaluate_best_model(self, X_test, y_test):
-        print("Score on test set: ", self.clf.score(X_test, y_test))
+        score = self.clf.score(X_test, y_test)
+        print("Score on test set: ", score)
         print("Report on test set: ", classification_report(y_test, self.clf.predict(X_test), output_dict=True))
         ConfusionMatrixDisplay.from_estimator(self.clf, X_test, y_test)
+        # Add Target Names to the plot
+        target_names = get_target_names()
+        plt.title(f"Confusion Matrix - Test Set: Score {score:.2f}")
+        plt.xticks(ticks=[0, 1, 2, 3], labels=target_names)
+        plt.yticks(ticks=[0, 1, 2, 3], labels=target_names)
+        # plt.savefig(f"{PLOTS_PATH}/confusion_matrix.png")
         plt.show()
+
 
 class RFClf(Classifier):
     def __init__(self):
@@ -42,6 +56,7 @@ class RFClf(Classifier):
             "min_samples_leaf": [1, 2, 3],
             "min_samples_split": [2, 3],
         }
+
 
 class KNNClf(Classifier):
     def __init__(self):

@@ -10,6 +10,17 @@ PLOT_SIZE = (16, 6)
 TOP_FEATURES = 5
 
 
+def get_target_names():
+    """Return the target names."""
+    # Read the CSV file
+    df = pd.read_csv(FEATURES_FILE)
+    # Get the last column's name which is assumed to be the target label
+    target_column = df.columns[-1]
+    # Get unique values of the target column
+    target_names = df[target_column].unique()
+    return target_names
+
+
 def get_label_names(indexes):
     """Return the names of the selected features."""
     with open(FEATURES_FILE, "r") as file:

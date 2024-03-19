@@ -24,6 +24,6 @@ if __name__ == "__main__":
     results = model_factory.build_and_evaluate(X_train, y_train, X_test, y_test, k=K, percentile=10)
 
     # Save results to JSON file
-    with open(f'{EVALUATIONS_PATH}/evaluation_results_10percent.json', 'w') as file_hanlde:
+    with open(f'{EVALUATIONS_PATH}/evaluation_results.json', 'w') as file_hanlde:
         json.dump(results, file_hanlde, indent=4)
 
