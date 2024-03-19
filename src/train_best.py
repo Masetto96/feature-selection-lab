@@ -3,8 +3,8 @@ from data_loader import DataLoader
 from model_factory import FeatureSelector
 from models_gym import Classifier
 
-TRAIN_DATA_PATH = "archive/TrainSet.csv"
-TEST_DATA_PATH = "archive/TestSet.csv"
+TRAIN_DATA_PATH = "../archive/TrainSet.csv"
+TEST_DATA_PATH = "../archive/TestSet.csv"
 
 if __name__ == "__main__":
 

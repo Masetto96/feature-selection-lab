@@ -3,9 +3,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-FEATURES_FILE = "archive/TrainSet.csv"
-EVALUATION_FILE_PREFIX = "evaluation_results"
-PLOT_PATH = "plots"
+FEATURES_FILE = "../archive/TrainSet.csv"
+EVALUATIONS_PATH = "../results"
+PLOT_PATH = "../plots"
 PLOT_SIZE = (16, 6)
 TOP_FEATURES = 5
 
@@ -19,7 +19,7 @@ def get_label_names(indexes):
 
 def get_evaluation_files():
     """Return all evaluation results files."""
-    return [file for file in os.listdir() if file.startswith(EVALUATION_FILE_PREFIX)]
+    return [file for file in os.listdir(EVALUATIONS_PATH) if file.endswith('.json')]
 
 
 def plot_feature_counts(feature_counts, title, ax):
@@ -64,7 +64,7 @@ def main():
 
     feature_counts_total = []
     for i, file_name in enumerate(file_names):
-        df = pd.read_json(file_name)
+        df = pd.read_json(f'{EVALUATIONS_PATH}/{file_name}')
         flattened_features = [item for sublist in df['selected_features'] for item in sublist]
         feature_names = get_label_names(flattened_features)
         feature_names = [f"{name} \n{index}" for name, index in zip(feature_names, flattened_features)]

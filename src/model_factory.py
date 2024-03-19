@@ -70,14 +70,14 @@ class ModelFactory(object):
         report = classification_report(y_test, y_pred, output_dict=True)
         return report
 
-    def build_and_evaluate(self, X_train, y_train, X_test, y_test, k=5):
+    def build_and_evaluate(self, X_train, y_train, X_test, y_test, k=5, percentile=25):
         """
         Peforms feature selection given the k parameter.
         Builds and evaluates a set of classifiers.
         """
         results = []
         print("X_train.shape: ", X_train.shape)
-        X_train_reduced, selector = self.feature_selector.select_statistically(X_train, y_train, percentile=75)
+        X_train_reduced, selector = self.feature_selector.select_statistically(X_train, y_train, percentile=percentile)
         print("X_train_reduced.shape: ", X_train_reduced.shape)
 
         # Index of selected features
