@@ -6,30 +6,24 @@ import seaborn as sns
 FEATURES_FILE = "../archive/TrainSet.csv"
 EVALUATIONS_PATH = "../results"
 PLOT_PATH = "../plots"
-PLOT_SIZE = (16, 6)
+PLOT_SIZE = (16, 5.5)
 TOP_FEATURES = 5
-
-colors = ['#4E9ACF',  # Blue
-          '#6BBB5F',  # Green
-          '#48A497',  # Teal
-          '#A0A0A0',  # Grey
-          '#F79256',  # Orange
-          '#E63946']  # Red
 
 
 def get_feature_category(index=0):
     """Return the category of the given feature index."""
+    index += 1  # Shift the index by 1 to match the column index
     feature_categories = {
         "Dynamics": [1, 8],
         "Rhythm": [8, 16],
         "Pitch": [16, 22],
         "Harmony": [22, 31],
         "Timbre": [31, 59],
-        "Structure": [59, 66]
+        "Structure": [59, 67]
     }
     # Find the category of the given index
     for category, (start, end) in feature_categories.items():
-        if start <= index+1 < end:
+        if start <= index < end:
             return category
 
 
@@ -90,14 +84,17 @@ def plot_total_feature_counts(feature_counts):
     plt.show()
 
 
-def plot_category_counts(feature_counts_total, subset_limits=[5]) -> None:
+def plot_category_counts(feature_counts, subset_limits=[5]) -> None:
     """ Plot Category Counts of Selected Features """
+    feature_counts = feature_counts.groupby(feature_counts.index).sum()
+    feature_counts = feature_counts.sort_values(ascending=False)
 
     fig, axes = plt.subplots(1, len(subset_limits), figsize=(6 * len(subset_limits), 6))
+    colors = sns.color_palette(palette='GnBu')
 
     for i, limit in enumerate(subset_limits):
         # Get Best Features
-        feature_best = feature_counts_total[:limit]
+        feature_best = feature_counts[:limit]
         # Plot Category Counts of Selected Features
         feature_best = feature_best.reset_index()
         feature_best['category'] = feature_best['index'].apply(lambda x: get_feature_category(int(x.split()[1])))
@@ -117,7 +114,7 @@ def plot_category_counts(feature_counts_total, subset_limits=[5]) -> None:
 
 def main():
     """ Main function to plot the feature counts."""
-    file_names = get_evaluation_files()
+    file_names = sorted(get_evaluation_files())
     fig, axes = plt.subplots(len(file_names), figsize=(PLOT_SIZE[0], PLOT_SIZE[1] * len(file_names)))
     plt.title('Count of Each Selected Feature')
 
@@ -139,7 +136,7 @@ def main():
     plot_total_feature_counts(feature_counts_total)
 
     # ---- Plot Category Counts of Selected Features ----
-    plot_category_counts(feature_counts_total, subset_limits=[5, 10, 20])
+    plot_category_counts(feature_counts_total, subset_limits=[5, 10, 25])
 
 
 if __name__ == "__main__":

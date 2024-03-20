@@ -14,7 +14,7 @@ if __name__ == "__main__":
     X_test, y_test = data_loader.prepare_test_data()
 
     # Select train and test features
-    X_train_reduced, selector = fs.select_statistically(X_train, y_train, percentile=75)
+    X_train_reduced, selector = fs.select_statistically(X_train, y_train, percentile=30)
     mask = selector.get_support()
     x_reduced_indices = np.where(mask)[0].astype(int)
     X_test_reduced = X_test[:, x_reduced_indices]

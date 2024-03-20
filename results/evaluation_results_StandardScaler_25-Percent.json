@@ -1,0 +1,308 @@
+[
+    {
+        "model_name": "Random Forest",
+        "direction": "forward",
+        "selected_features": [
+            0,
+            5,
+            39,
+            60,
+            62
+        ],
+        "score_sequential": 0.45,
+        "report": {
+            "0": {
+                "precision": 0.5,
+                "recall": 0.4,
+                "f1-score": 0.4444444444444444,
+                "support": 5.0
+            },
+            "1": {
+                "precision": 0.25,
+                "recall": 0.2,
+                "f1-score": 0.2222222222222222,
+                "support": 5.0
+            },
+            "2": {
+                "precision": 0.5,
+                "recall": 0.6,
+                "f1-score": 0.5454545454545454,
+                "support": 5.0
+            },
+            "3": {
+                "precision": 0.5,
+                "recall": 0.6,
+                "f1-score": 0.5454545454545454,
+                "support": 5.0
+            },
+            "accuracy": 0.45,
+            "macro avg": {
+                "precision": 0.4375,
+                "recall": 0.45000000000000007,
+                "f1-score": 0.43939393939393934,
+                "support": 20.0
+            },
+            "weighted avg": {
+                "precision": 0.4375,
+                "recall": 0.45,
+                "f1-score": 0.43939393939393934,
+                "support": 20.0
+            }
+        }
+    },
+    {
+        "model_name": "Random Forest",
+        "direction": "backward",
+        "selected_features": [
+            0,
+            2,
+            26,
+            57,
+            60
+        ],
+        "score_sequential": 0.45,
+        "report": {
+            "0": {
+                "precision": 0.6,
+                "recall": 0.6,
+                "f1-score": 0.6,
+                "support": 5.0
+            },
+            "1": {
+                "precision": 0.2857142857142857,
+                "recall": 0.4,
+                "f1-score": 0.3333333333333333,
+                "support": 5.0
+            },
+            "2": {
+                "precision": 1.0,
+                "recall": 0.2,
+                "f1-score": 0.3333333333333333,
+                "support": 5.0
+            },
+            "3": {
+                "precision": 0.42857142857142855,
+                "recall": 0.6,
+                "f1-score": 0.5,
+                "support": 5.0
+            },
+            "accuracy": 0.45,
+            "macro avg": {
+                "precision": 0.5785714285714285,
+                "recall": 0.44999999999999996,
+                "f1-score": 0.44166666666666665,
+                "support": 20.0
+            },
+            "weighted avg": {
+                "precision": 0.5785714285714285,
+                "recall": 0.45,
+                "f1-score": 0.4416666666666666,
+                "support": 20.0
+            }
+        }
+    },
+    {
+        "model_name": "Gradient Boosting",
+        "direction": "forward",
+        "selected_features": [
+            0,
+            2,
+            35,
+            58,
+            60
+        ],
+        "score_sequential": 0.4,
+        "report": {
+            "0": {
+                "precision": 0.5,
+                "recall": 0.4,
+                "f1-score": 0.4444444444444444,
+                "support": 5.0
+            },
+            "1": {
+                "precision": 0.4,
+                "recall": 0.4,
+                "f1-score": 0.4,
+                "support": 5.0
+            },
+            "2": {
+                "precision": 0.6666666666666666,
+                "recall": 0.4,
+                "f1-score": 0.5,
+                "support": 5.0
+            },
+            "3": {
+                "precision": 0.25,
+                "recall": 0.4,
+                "f1-score": 0.3076923076923077,
+                "support": 5.0
+            },
+            "accuracy": 0.4,
+            "macro avg": {
+                "precision": 0.45416666666666666,
+                "recall": 0.4,
+                "f1-score": 0.41303418803418807,
+                "support": 20.0
+            },
+            "weighted avg": {
+                "precision": 0.4541666666666666,
+                "recall": 0.4,
+                "f1-score": 0.41303418803418807,
+                "support": 20.0
+            }
+        }
+    },
+    {
+        "model_name": "Gradient Boosting",
+        "direction": "backward",
+        "selected_features": [
+            7,
+            26,
+            39,
+            56,
+            62
+        ],
+        "score_sequential": 0.45,
+        "report": {
+            "0": {
+                "precision": 0.75,
+                "recall": 0.6,
+                "f1-score": 0.6666666666666666,
+                "support": 5.0
+            },
+            "1": {
+                "precision": 0.4,
+                "recall": 0.4,
+                "f1-score": 0.4,
+                "support": 5.0
+            },
+            "2": {
+                "precision": 0.375,
+                "recall": 0.6,
+                "f1-score": 0.46153846153846156,
+                "support": 5.0
+            },
+            "3": {
+                "precision": 0.3333333333333333,
+                "recall": 0.2,
+                "f1-score": 0.25,
+                "support": 5.0
+            },
+            "accuracy": 0.45,
+            "macro avg": {
+                "precision": 0.4645833333333333,
+                "recall": 0.45,
+                "f1-score": 0.444551282051282,
+                "support": 20.0
+            },
+            "weighted avg": {
+                "precision": 0.4645833333333333,
+                "recall": 0.45,
+                "f1-score": 0.444551282051282,
+                "support": 20.0
+            }
+        }
+    },
+    {
+        "model_name": "K-Nearest Neighbors",
+        "direction": "forward",
+        "selected_features": [
+            2,
+            7,
+            26,
+            39,
+            60
+        ],
+        "score_sequential": 0.7,
+        "report": {
+            "0": {
+                "precision": 1.0,
+                "recall": 0.8,
+                "f1-score": 0.8888888888888888,
+                "support": 5.0
+            },
+            "1": {
+                "precision": 0.5714285714285714,
+                "recall": 0.8,
+                "f1-score": 0.6666666666666666,
+                "support": 5.0
+            },
+            "2": {
+                "precision": 1.0,
+                "recall": 0.6,
+                "f1-score": 0.75,
+                "support": 5.0
+            },
+            "3": {
+                "precision": 0.5,
+                "recall": 0.6,
+                "f1-score": 0.5454545454545454,
+                "support": 5.0
+            },
+            "accuracy": 0.7,
+            "macro avg": {
+                "precision": 0.7678571428571428,
+                "recall": 0.7000000000000001,
+                "f1-score": 0.7127525252525252,
+                "support": 20.0
+            },
+            "weighted avg": {
+                "precision": 0.7678571428571429,
+                "recall": 0.7,
+                "f1-score": 0.7127525252525253,
+                "support": 20.0
+            }
+        }
+    },
+    {
+        "model_name": "K-Nearest Neighbors",
+        "direction": "backward",
+        "selected_features": [
+            2,
+            7,
+            36,
+            39,
+            62
+        ],
+        "score_sequential": 0.8,
+        "report": {
+            "0": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1-score": 1.0,
+                "support": 5.0
+            },
+            "1": {
+                "precision": 0.8333333333333334,
+                "recall": 1.0,
+                "f1-score": 0.9090909090909091,
+                "support": 5.0
+            },
+            "2": {
+                "precision": 0.75,
+                "recall": 0.6,
+                "f1-score": 0.6666666666666666,
+                "support": 5.0
+            },
+            "3": {
+                "precision": 0.6,
+                "recall": 0.6,
+                "f1-score": 0.6,
+                "support": 5.0
+            },
+            "accuracy": 0.8,
+            "macro avg": {
+                "precision": 0.7958333333333334,
+                "recall": 0.8,
+                "f1-score": 0.793939393939394,
+                "support": 20.0
+            },
+            "weighted avg": {
+                "precision": 0.7958333333333334,
+                "recall": 0.8,
+                "f1-score": 0.793939393939394,
+                "support": 20.0
+            }
+        }
+    }
+]
