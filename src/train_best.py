@@ -22,13 +22,13 @@ if __name__ == "__main__":
     X_test_reduced = X_test[:, x_reduced_indices]
 
     rf_clf = RFClf()
-    rf_clf.train_and_optimize(X_train_reduced, y_train, verbose=1, n_iter=10)
+    rf_clf.train_and_optimize(X_train_reduced, y_train, verbose=1, n_iter=50)
     rf_clf.evaluate_best_model(X_test_reduced, y_test, csv_file="archive/TestSet.csv")
 
     print("-------------")
 
     knn_clf = KNNClf()
-    knn_clf.train_and_optimize(X_train_reduced, y_train, verbose=1, n_iter=10)
+    knn_clf.train_and_optimize(X_train_reduced, y_train, verbose=1, n_iter=50)
     knn_clf.evaluate_best_model(X_test_reduced, y_test, csv_file="archive/TestSet.csv")
 
     # Best hyperparameters are: {'n_estimators': 75, 'min_samples_split': 2, 'min_samples_leaf': 2, 'max_features': 3, 'max_depth': 3, 'criterion': 'gini', 'bootstrap': True}

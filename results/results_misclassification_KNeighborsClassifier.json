@@ -20,11 +20,6 @@
         "misclassified_label": "happy"
     },
     {
-        "file_name": "03-ana_s_song_open_fire.mp3       ",
-        "original_label": "sad",
-        "misclassified_label": "happy"
-    },
-    {
         "file_name": "03-heaven.mp3       ",
         "original_label": "sad",
         "misclassified_label": "relaxed"
