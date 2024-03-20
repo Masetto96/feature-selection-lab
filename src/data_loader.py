@@ -7,7 +7,7 @@ from sklearn.impute import SimpleImputer
 class DataLoader(object):
 
     def __init__(self, training_data_path: str, test_data_path: str, 
-                 categorical_encoder=LabelEncoder(), numerical_scaler=MinMaxScaler(), imputer=SimpleImputer()):
+                 categorical_encoder=LabelEncoder(), numerical_scaler=StandardScaler(), imputer=SimpleImputer()):
         self.train_data_path = Path(training_data_path)
         self.test_data_path = Path(test_data_path)
         self.categorical_encoder = categorical_encoder

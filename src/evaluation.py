@@ -3,9 +3,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-FEATURES_FILE = "../archive/TrainSet.csv"
-EVALUATIONS_PATH = "../results"
-PLOT_PATH = "../plots"
+FEATURES_FILE = "archive/TrainSet.csv"
+EVALUATIONS_PATH = "results"
+PLOT_PATH = "plots"
 PLOT_SIZE = (16, 5.5)
 TOP_FEATURES = 5
 
